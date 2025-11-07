@@ -22,24 +22,54 @@ This repository uses GitHub Actions for automated testing and publishing to npm.
 
 ## Setup Instructions
 
-### 1. Get your npm access token
+### Using Trusted Publishing (Recommended - More Secure!)
+
+GitHub Actions now supports **Trusted Publishing** which is more secure than using long-lived npm tokens. No secrets needed!
+
+#### 1. Configure npm for Trusted Publishing
 
 1. Go to https://www.npmjs.com
-2. Click on your profile → "Access Tokens"
-3. Click "Generate New Token" → "Classic Token"
-4. Select "Automation" type
-5. Copy the token (you won't see it again!)
+2. Log in to your account
+3. Go to your package page (or create it first with `npm publish`)
+4. Click "Settings" tab
+5. Scroll to "Publishing access"
+6. Click "Configure Trusted Publishers"
+7. Add a new publisher with:
+   - **Provider**: GitHub Actions
+   - **Repository owner**: `EIP-DeckedOut-Orga`
+   - **Repository name**: `eip-visual-editor-package`
+   - **Workflow filename**: `publish.yml`
+   - **Environment name**: (leave empty for now)
 
-### 2. Add the token to GitHub Secrets
+#### 2. That's it! No GitHub secrets needed!
 
-1. Go to your GitHub repository
-2. Click "Settings" → "Secrets and variables" → "Actions"
-3. Click "New repository secret"
-4. Name: `NPM_TOKEN`
-5. Value: Paste your npm token
-6. Click "Add secret"
+When you create a GitHub release, the workflow will automatically:
+- Generate a temporary OIDC token
+- Use it to authenticate with npm
+- Publish your package with provenance
+- All without storing any long-lived credentials!
 
-### 3. Create a release to trigger publishing
+### Alternative: Using npm Token (Less Secure)
+
+If you can't use Trusted Publishing for some reason:
+
+1. **Get your npm access token**:
+   - Go to https://www.npmjs.com
+   - Click on your profile → "Access Tokens"
+   - Click "Generate New Token" → "Classic Token"
+   - Select "Automation" type
+   - Copy the token
+
+2. **Add token to GitHub Secrets**:
+   - Go to your GitHub repository settings
+   - Click "Secrets and variables" → "Actions"
+   - Click "New repository secret"
+   - Name: `NPM_TOKEN`
+   - Value: Paste your token
+   
+3. **Update the workflow** to uncomment the `NODE_AUTH_TOKEN` line
+
+---
 
 #### Option A: Using GitHub UI
 1. Go to your repository on GitHub
