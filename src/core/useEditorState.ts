@@ -14,6 +14,10 @@ import {
   EditorMode,
   CanvasExport,
 } from "../types";
+import { 
+  duplicateElement as duplicateElementUtil,
+  generateElementId 
+} from "../utils/editorUtils";
 
 /**
  * Initial state for the editor
@@ -355,9 +359,7 @@ export const useEditorState = (initialMode: EditorMode | null = null) => {
 
       if (!elementToDuplicate) return;
 
-      // Import duplicateElement utility
-      const { duplicateElement: duplicateUtil } = require("../utils/editorUtils");
-      const duplicated = duplicateUtil(elementToDuplicate, offset);
+      const duplicated = duplicateElementUtil(elementToDuplicate, offset);
 
       addElement(duplicated);
     },
@@ -367,9 +369,6 @@ export const useEditorState = (initialMode: EditorMode | null = null) => {
   const pasteElement = useCallback(
     (copiedElement: EditorElement, offset = { x: 20, y: 20 }) => {
       if (!copiedElement) return;
-
-      // Import utilities
-      const { generateElementId } = require("../utils/editorUtils");
 
       // Create new element with new ID and offset position
       const pasted: EditorElement = {
