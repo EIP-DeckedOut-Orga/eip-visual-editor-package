@@ -11,6 +11,8 @@ export default defineConfig({
     'react',
     'react-dom',
     'react/jsx-runtime',
+    'konva',
+    'react-konva',
   ],
   esbuildOptions(options: any) {
     options.banner = {

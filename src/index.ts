@@ -9,7 +9,7 @@
 export { VisualEditor } from "./core/VisualEditor";
 
 // UI Components
-export { Inspector } from "./components/Inspector";
+export { Inspector, renderField } from "./components/Inspector";
 export { LayersPanel } from "./components/LayersPanel";
 export { VisualEditorWorkspace } from "./components/VisualEditorWorkspace";
 export { AssetPicker } from "./components/AssetPicker";
@@ -52,3 +52,6 @@ export type {
   // Component props
   VisualEditorProps,
 } from "./types";
+
+// Snapping utilities
+export * from "./utils/snapping";
