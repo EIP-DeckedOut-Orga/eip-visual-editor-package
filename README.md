@@ -1,5 +1,10 @@
 # @deckedout/visual-editor
 
+[![CI](https://github.com/EIP-DeckedOut-Orga/eip-visual-editor-package/actions/workflows/ci.yml/badge.svg)](https://github.com/EIP-DeckedOut-Orga/eip-visual-editor-package/actions/workflows/ci.yml)
+[![npm version](https://badge.fury.io/js/@deckedout%2Fvisual-editor.svg)](https://badge.fury.io/js/@deckedout%2Fvisual-editor)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Coverage](https://img.shields.io/badge/coverage-95%25-brightgreen)]()
+
 A flexible, drag-and-drop visual editor built with React and Konva for creating interactive canvases with customizable elements.
 
 ## Features
@@ -12,6 +17,7 @@ A flexible, drag-and-drop visual editor built with React and Konva for creating 
 - 🎭 **Multiple Modes**: Edit and preview modes
 - 📸 **Export Support**: Export canvas to JSON or image formats
 - 🎨 **Asset Management**: Built-in asset picker for images
+- ✅ **Well Tested**: 95%+ code coverage with comprehensive test suite
 
 ## Installation
 
@@ -218,6 +224,52 @@ function EditorWithCustomElements() {
   return <VisualEditorWorkspace canvasWidth={800} canvasHeight={600} />;
 }
 ```
+
+## Development
+
+### Running Tests
+
+```bash
+# Run all tests
+npm test
+
+# Run tests in watch mode
+npm run test:watch
+
+# Generate coverage report
+npm run test:coverage
+```
+
+### Building
+
+```bash
+# Build the package
+npm run build
+
+# Type check
+npm run type-check
+
+# Lint
+npm run lint
+```
+
+### Testing Coverage
+
+This package maintains high test coverage:
+- **95.26%** statements
+- **94.2%** branches  
+- **93.05%** functions
+- **95.77%** lines
+
+See [TESTING.md](./TESTING.md) for detailed testing documentation.
+
+## Contributing
+
+Contributions are welcome! Please ensure:
+1. All tests pass (`npm test`)
+2. Code coverage remains above 90%
+3. Code is properly linted (`npm run lint`)
+4. Types are correct (`npm run type-check`)
 
 ## License
 
