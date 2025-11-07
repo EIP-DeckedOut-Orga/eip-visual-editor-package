@@ -1,0 +1,10 @@
+src
+tsconfig.json
+.eslintrc.js
+*.log
+node_modules
+.DS_Store
+coverage
+.vscode
+.idea
+*.tsbuildinfo
