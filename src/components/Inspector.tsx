@@ -426,7 +426,7 @@ export function renderField(
   const value = editingValues[field.name] ?? props[field.name] ?? field.defaultValue;
 
   switch (field.type) {
-    case "custom":
+    case "custom": {
       // Custom renderer support
       if (!field.customRenderer) {
         console.error(`Custom field "${field.name}" has no customRenderer defined`);
@@ -445,8 +445,9 @@ export function renderField(
           />
         </div>
       );
+    }
 
-    case "string":
+    case "string": {
       const isMultiline = field.name === "content" || field.name === "text";
       return (
         <div key={field.name}>
@@ -474,8 +475,9 @@ export function renderField(
           )}
         </div>
       );
+    }
 
-    case "number":
+    case "number": {
       return (
         <div key={field.name}>
           <Label htmlFor={field.name} className="text-xs">
@@ -496,8 +498,9 @@ export function renderField(
           )}
         </div>
       );
+    }
 
-    case "color":
+    case "color": {
       return (
         <div key={field.name}>
           <Label htmlFor={field.name} className="text-xs">
@@ -515,8 +518,9 @@ export function renderField(
           )}
         </div>
       );
+    }
 
-    case "select":
+    case "select": {
       return (
         <div key={field.name}>
           <Label htmlFor={field.name} className="text-xs">
@@ -542,8 +546,9 @@ export function renderField(
           )}
         </div>
       );
+    }
 
-    case "boolean":
+    case "boolean": {
       return (
         <div key={field.name} className="flex items-start space-x-2">
           <Checkbox
@@ -562,8 +567,9 @@ export function renderField(
           </div>
         </div>
       );
+    }
 
-    case "slider":
+    case "slider": {
       return (
         <div key={field.name}>
           <div className="flex items-center justify-between mb-2">
@@ -583,8 +589,9 @@ export function renderField(
           )}
         </div>
       );
+    }
 
-    case "image":
+    case "image": {
       return (
         <div key={field.name}>
           <Label htmlFor={field.name} className="text-xs">
@@ -602,6 +609,7 @@ export function renderField(
           )}
         </div>
       );
+    }
 
     default:
       return null;
