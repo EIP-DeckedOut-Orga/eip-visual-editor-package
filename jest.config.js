@@ -17,6 +17,8 @@ module.exports = {
     '!src/components/**/*.tsx', // Exclude React components (tested via integration)
     '!src/**/*.stories.tsx',
     '!src/elements/**/*.tsx', // Exclude element renderers (tested via integration)
+    '!src/elements/index.ts', // Exclude element registry exports
+    '!src/hooks/**/*.tsx', // Exclude React hooks (tested via integration)
     '!src/core/ElementRegistry.ts', // Tested via integration
     '!src/core/VisualEditor.tsx', // Tested via integration  
     '!src/lib/**/*.ts', // Utility file with simple re-exports
