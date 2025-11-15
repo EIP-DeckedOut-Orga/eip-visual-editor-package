@@ -381,7 +381,7 @@ export const VisualEditorWorkspace: React.FC<VisualEditorWorkspaceProps> = ({
             backgroundImageUrl={
               backgroundImage && mode?.context?.imageUrls
                 ? mode.context.imageUrls.get(backgroundImage)
-                : undefined
+                : backgroundImageUrl
             }
             hideElements={hideElements}
             onSelectElement={(id) => api.selectElement(id)}
