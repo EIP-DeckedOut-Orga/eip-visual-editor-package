@@ -1,9 +1,10 @@
 # @deckedout/visual-editor
 
 [![CI](https://github.com/EIP-DeckedOut-Orga/eip-visual-editor-package/actions/workflows/ci.yml/badge.svg)](https://github.com/EIP-DeckedOut-Orga/eip-visual-editor-package/actions/workflows/ci.yml)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=EIP-DeckedOut-Orga_eip-visual-editor-package&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=EIP-DeckedOut-Orga_eip-visual-editor-package)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=EIP-DeckedOut-Orga_eip-visual-editor-package&metric=coverage)](https://sonarcloud.io/summary/new_code?id=EIP-DeckedOut-Orga_eip-visual-editor-package)
 [![npm version](https://badge.fury.io/js/@deckedout%2Fvisual-editor.svg)](https://badge.fury.io/js/@deckedout%2Fvisual-editor)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Coverage](https://img.shields.io/badge/coverage-95%25-brightgreen)]()
 
 A flexible, drag-and-drop visual editor built with React and Konva for creating interactive canvases with customizable elements.
 

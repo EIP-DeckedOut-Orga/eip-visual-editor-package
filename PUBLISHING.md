@@ -1,85 +1,55 @@
 # Publishing to npm
 
-Follow these steps to publish your Visual Editor package to npm:
+## � How to Publish a New Version (CI/CD)
 
-## 1. Test the Package Locally
-
-Before publishing, test the package in your project:
+The package uses npm Trusted Publisher (OIDC) for automated publishing. No tokens needed!
 
 ```bash
-# In the package directory
-cd /Users/yanisberkane/Documents/visual-editor-package
-npm run build
+# 1. Commit your changes
+git add .
+git commit -m "feat: your changes"
+git push
 
-# Create a tarball for local testing
-npm pack
+# 2. Bump the version
+npm version patch   # 1.0.5 → 1.0.6 (bug fixes)
+npm version minor   # 1.0.5 → 1.1.0 (new features)
+npm version major   # 1.0.5 → 2.0.0 (breaking changes)
+
+# 3. Push the tag
+git push && git push --tags
 ```
 
-This creates a `.tgz` file that you can install in other projects:
+That's it! The CI/CD pipeline automatically:
+- ✅ Runs tests
+- ✅ Builds the package
+- ✅ Publishes to npm
 
-```bash
-# In your other project
-npm install /path/to/deckedout-visual-editor-1.0.0.tgz
-```
+**Monitor**: https://github.com/EIP-DeckedOut-Orga/eip-visual-editor-package/actions
 
-## 2. Set up npm Account
+---
 
-If you don't have an npm account:
-- Go to https://www.npmjs.com/signup
-- Create an account
-- Verify your email
+## 📦 Manual Publishing (Fallback)
 
-## 3. Login to npm
+If CI/CD fails or for first-time setup:
 
 ```bash
 npm login
-```
-
-Enter your npm username, password, and email.
-
-## 4. Update Package Name (If Needed)
-
-If `@deckedout/visual-editor` is taken, update the name in `package.json`:
-
-```json
-{
-  "name": "@your-username/visual-editor"
-}
-```
-
-Or use a non-scoped name:
-```json
-{
-  "name": "visual-editor-deckedout"
-}
-```
-
-## 5. Publish the Package
-
-```bash
-# For scoped packages (@deckedout/visual-editor)
+npm run build
+npm test
 npm publish --access public
-
-# For non-scoped packages
-npm publish
 ```
 
-## 6. Update Version for Future Releases
+---
 
-When making updates:
+## 🔍 Local Testing
 
 ```bash
-# Patch release (1.0.0 -> 1.0.1) - for bug fixes
-npm version patch
+# Build and pack
+npm run build
+npm pack
 
-# Minor release (1.0.0 -> 1.1.0) - for new features
-npm version minor
-
-# Major release (1.0.0 -> 2.0.0) - for breaking changes
-npm version major
-
-# Then publish again
-npm publish
+# Install in test project
+npm install /path/to/deckedout-visual-editor-1.0.6.tgz
 ```
 
 ## Using in Other Projects
