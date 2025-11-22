@@ -1,6 +1,26 @@
 // Jest setup file
 require('@testing-library/jest-dom');
 
+// Mock react-konva
+jest.mock('react-konva', () => ({
+  Stage: 'div',
+  Layer: 'div',
+  Rect: 'div',
+  Circle: 'div',
+  Text: 'div',
+  Image: 'img',
+  Transformer: 'div',
+  Group: 'div',
+  Line: 'div',
+}));
+
+// Mock konva
+jest.mock('konva', () => ({
+  Konva: {
+    pixelRatio: 1,
+  },
+}));
+
 // Mock Konva for tests
 global.HTMLCanvasElement.prototype.getContext = jest.fn(() => ({
   fillRect: jest.fn(),

@@ -72,7 +72,8 @@ export const VisualEditor: React.FC<VisualEditorProps> = ({
     if (initialData) {
       api.importJSON(initialData);
     }
-  }, [initialData, api]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initialData]);
 
   // Update mode when it changes
   useEffect(() => {
@@ -87,7 +88,8 @@ export const VisualEditor: React.FC<VisualEditorProps> = ({
         mode.onModeActivate(api);
       }
     }
-  }, [mode, setEditorMode, registry, api]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mode]);
 
   // Notify parent of changes
   useEffect(() => {
