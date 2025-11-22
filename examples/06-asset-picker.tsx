@@ -8,9 +8,7 @@
 import React, { useState, useCallback } from 'react';
 import { 
   VisualEditorWorkspace, 
-  EditorMode,
-  AssetPickerProps,
-  createElement
+  EditorMode
 } from '@deckedout/visual-editor';
 
 // Mock asset data
@@ -58,34 +56,22 @@ const mockAssets = [
 ];
 
 export function AssetPickerExample() {
-  const [assets] = useState(mockAssets);
-
   // Editor mode with asset picker
   const gameEditorMode: EditorMode = {
-    id: 'game-editor',
     name: 'Game Asset Editor',
-    description: 'Design game scenes with asset picker',
+    displayName: 'Game Asset Editor',
     
-    canvasSize: {
+    defaultCanvasSize: {
       width: 1200,
       height: 800
-    },
-    
-    // Configure asset picker
-    assetPickerConfig: {
-      title: 'Game Assets',
-      // Assets are passed via prop
     }
+    
+    // Note: Asset picker is configured via VisualEditorWorkspace props
+    // Assets are passed via the 'assets' prop on VisualEditorWorkspace
   };
 
-  // Handle asset selection
-  const handleAssetSelect = useCallback((assetPath: string) => {
-    console.log('Asset selected:', assetPath);
-    // The editor will automatically create an image element
-    // You can also handle this manually using the API
-  }, []);
-
-  // Custom asset renderer (optional)
+  // Custom asset renderer would go here if needed
+  /*
   const renderAsset = useCallback((asset: typeof mockAssets[0]) => {
     return (
       <div
@@ -133,6 +119,7 @@ export function AssetPickerExample() {
       </div>
     );
   }, []);
+  */
 
   return (
     <div style={{ width: '100vw', height: '100vh' }}>
@@ -247,12 +234,10 @@ export function DynamicAssetPickerExample() {
   }, []);
 
   const mode: EditorMode = {
-    id: 'dynamic-assets',
     name: 'Dynamic Assets',
-    canvasSize: { width: 1200, height: 800 },
-    assetPickerConfig: {
-      title: 'Asset Library',
-    }
+    displayName: 'Dynamic Assets',
+    defaultCanvasSize: { width: 1200, height: 800 }
+    // Note: Asset picker title can be customized via assetPickerComponent prop
   };
 
   return (
@@ -268,7 +253,13 @@ export function DynamicAssetPickerExample() {
             style={{ display: 'none' }}
             onChange={handleFileUpload}
           />
-          <button as="span">Upload Asset</button>
+          <span style={{ 
+            padding: '6px 12px',
+            background: '#e2e8f0',
+            borderRadius: '4px',
+            cursor: 'pointer',
+            display: 'inline-block'
+          }}>Upload Asset</span>
         </label>
         <span style={{ marginLeft: '10px' }}>
           Total Assets: {assets.length}

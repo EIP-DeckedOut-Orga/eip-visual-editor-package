@@ -5,12 +5,11 @@
  * manipulate elements, handle events, and integrate with external logic.
  */
 
-import React, { useRef, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { 
   VisualEditorWorkspace, 
   useEditorState,
-  createElement,
-  EditorAPI
+  createElement
 } from '@deckedout/visual-editor';
 
 export function ProgrammaticAPIExample() {
@@ -125,7 +124,6 @@ export function ProgrammaticAPIExample() {
   // Export data
   const exportData = useCallback(() => {
     const data = api.exportJSON();
-    console.log('Exported data:', data);
     alert(`Exported ${data.elements.length} elements`);
   }, [api]);
 
@@ -167,7 +165,7 @@ export function ProgrammaticAPIExample() {
         <div style={{ marginLeft: 'auto', padding: '5px 10px', background: '#f0f0f0', borderRadius: '4px' }}>
           Elements: {state.elements.length} | 
           Selected: {state.selectedElementId || 'None'} |
-          History: {state.history.length}
+          History: {state.history.past.length}
         </div>
       </div>
 

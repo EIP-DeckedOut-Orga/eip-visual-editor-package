@@ -9,20 +9,17 @@ import React, { useState } from 'react';
 import { 
   VisualEditorWorkspace, 
   EditorMode,
-  EditorAPI,
-  CustomEditorButtonAction,
-  CustomEditorDropdownAction
+  EditorAPI
 } from '@deckedout/visual-editor';
-import { Palette, Download, Upload, Wand2 } from 'lucide-react';
+import { Palette, Wand2 } from 'lucide-react';
 
 // Card Editor Mode - Optimized for card design
 const cardEditorMode: EditorMode = {
-  id: 'card-editor',
   name: 'Card Designer',
-  description: 'Create and design game cards',
+  displayName: 'Card Designer',
   
   // Default canvas size for cards
-  canvasSize: {
+  defaultCanvasSize: {
     width: 750,
     height: 1050  // Standard poker card ratio
   },
@@ -83,7 +80,7 @@ const cardEditorMode: EditorMode = {
           
           api.loadElements([bg, title]);
         }
-      } as CustomEditorButtonAction
+      }
     ],
     
     // Custom tools at the end
@@ -99,7 +96,7 @@ const cardEditorMode: EditorMode = {
           { value: 'tarot', label: 'Tarot (70×120mm)' },
           { value: 'mini', label: 'Mini (44×68mm)' }
         ],
-        onChange: (value: string, api: EditorAPI) => {
+        onChange: (value: string, _api: EditorAPI) => {
           const sizes: Record<string, { width: number; height: number }> = {
             poker: { width: 750, height: 1050 },
             bridge: { width: 675, height: 1050 },
@@ -110,10 +107,10 @@ const cardEditorMode: EditorMode = {
           const size = sizes[value];
           if (size) {
             // Resize canvas logic would go here
-            console.log('Resize to:', size);
+            // Size would be applied to canvas here
           }
         }
-      } as CustomEditorDropdownAction
+      }
     ]
   },
   
@@ -125,7 +122,6 @@ const cardEditorMode: EditorMode = {
     showCopy: true,
     showPaste: true,
     showDuplicate: true,
-    showCanvasSizeControls: false, // Fixed size for cards
     showImport: true,
     showExport: true
   }
@@ -133,11 +129,10 @@ const cardEditorMode: EditorMode = {
 
 // Poster Editor Mode - For larger designs
 const posterEditorMode: EditorMode = {
-  id: 'poster-editor',
   name: 'Poster Designer',
-  description: 'Create posters and banners',
+  displayName: 'Poster Designer',
   
-  canvasSize: {
+  defaultCanvasSize: {
     width: 1920,
     height: 1080  // HD ratio
   },
@@ -150,11 +145,11 @@ const posterEditorMode: EditorMode = {
         id: 'background-picker',
         label: 'Background',
         icon: <Palette size={16} />,
-        onClick: (api: EditorAPI) => {
+        onClick: () => {
           // Add background color selector
           alert('Background picker would open here');
         }
-      } as CustomEditorButtonAction
+      }
     ]
   },
   
@@ -162,7 +157,6 @@ const posterEditorMode: EditorMode = {
     showUndo: true,
     showRedo: true,
     showDelete: true,
-    showCanvasSizeControls: true, // Allow size adjustment
     showImport: true,
     showExport: true
   }
@@ -170,11 +164,10 @@ const posterEditorMode: EditorMode = {
 
 // Minimal Mode - For simple editing
 const minimalMode: EditorMode = {
-  id: 'minimal',
   name: 'Minimal Editor',
-  description: 'Simple editing interface',
+  displayName: 'Minimal Editor',
   
-  canvasSize: {
+  defaultCanvasSize: {
     width: 1000,
     height: 600
   },
@@ -190,7 +183,6 @@ const minimalMode: EditorMode = {
     showUndo: true,
     showRedo: true,
     showDelete: true,
-    showCanvasSizeControls: false,
     showImport: false,
     showExport: false
   }
@@ -198,6 +190,12 @@ const minimalMode: EditorMode = {
 
 export function EditorModesExample() {
   const [currentMode, setCurrentMode] = useState<EditorMode>(cardEditorMode);
+  const [currentModeName, setCurrentModeName] = useState('card-editor');
+
+  const selectMode = (mode: EditorMode, name: string) => {
+    setCurrentMode(mode);
+    setCurrentModeName(name);
+  };
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
@@ -210,11 +208,11 @@ export function EditorModesExample() {
         <h3 style={{ margin: '0 0 10px 0' }}>Select Editor Mode:</h3>
         <div style={{ display: 'flex', gap: '10px' }}>
           <button
-            onClick={() => setCurrentMode(cardEditorMode)}
+            onClick={() => selectMode(cardEditorMode, 'card-editor')}
             style={{
               padding: '10px 20px',
-              background: currentMode.id === 'card-editor' ? '#3b82f6' : '#e2e8f0',
-              color: currentMode.id === 'card-editor' ? 'white' : 'black',
+              background: currentModeName === 'card-editor' ? '#3b82f6' : '#e2e8f0',
+              color: currentModeName === 'card-editor' ? 'white' : 'black',
               border: 'none',
               borderRadius: '6px',
               cursor: 'pointer'
@@ -224,11 +222,11 @@ export function EditorModesExample() {
           </button>
           
           <button
-            onClick={() => setCurrentMode(posterEditorMode)}
+            onClick={() => selectMode(posterEditorMode, 'poster-editor')}
             style={{
               padding: '10px 20px',
-              background: currentMode.id === 'poster-editor' ? '#3b82f6' : '#e2e8f0',
-              color: currentMode.id === 'poster-editor' ? 'white' : 'black',
+              background: currentModeName === 'poster-editor' ? '#3b82f6' : '#e2e8f0',
+              color: currentModeName === 'poster-editor' ? 'white' : 'black',
               border: 'none',
               borderRadius: '6px',
               cursor: 'pointer'
@@ -238,11 +236,11 @@ export function EditorModesExample() {
           </button>
           
           <button
-            onClick={() => setCurrentMode(minimalMode)}
+            onClick={() => selectMode(minimalMode, 'minimal')}
             style={{
               padding: '10px 20px',
-              background: currentMode.id === 'minimal' ? '#3b82f6' : '#e2e8f0',
-              color: currentMode.id === 'minimal' ? 'white' : 'black',
+              background: currentModeName === 'minimal' ? '#3b82f6' : '#e2e8f0',
+              color: currentModeName === 'minimal' ? 'white' : 'black',
               border: 'none',
               borderRadius: '6px',
               cursor: 'pointer'
@@ -253,14 +251,16 @@ export function EditorModesExample() {
         </div>
         
         <p style={{ margin: '10px 0 0 0', color: '#64748b' }}>
-          {currentMode.description} - Canvas: {currentMode.canvasSize?.width}×{currentMode.canvasSize?.height}
+          {currentModeName === 'card-editor' ? 'Create and design game cards' : 
+           currentModeName === 'poster-editor' ? 'Create posters and banners' : 
+           'Simple editing interface'} - Canvas: {currentMode.defaultCanvasSize?.width}×{currentMode.defaultCanvasSize?.height}
         </p>
       </div>
 
       {/* Editor with selected mode */}
       <div style={{ flex: 1 }}>
         <VisualEditorWorkspace
-          key={currentMode.id} // Force remount on mode change
+          key={currentModeName} // Force remount on mode change
           mode={currentMode}
           showToolbar={true}
           showTopbar={true}
