@@ -28,8 +28,8 @@
 Created `.github/workflows/deploy-docs.yml`:
 - Triggers on push to `main` branch
 - Generates documentation
-- Deploys to GitHub Pages automatically
-- Uses GitHub Actions deployment environment
+- Deploys to server at `/var/www/dev/docs/editor/`
+- Runs on self-hosted runner with direct server access
 
 ### 5. Documentation
 - `DOCUMENTATION.md`: Complete guide for writing and maintaining docs
@@ -52,23 +52,22 @@ npm run docs:watch
 open docs/index.html
 ```
 
-## GitHub Pages Setup
+## Server Deployment Setup
 
 ### Required Steps (One-Time Setup):
 
-1. **Enable GitHub Pages**:
-   - Go to repository Settings → Pages
-   - Source: Deploy from a branch OR GitHub Actions
-   - If using GitHub Actions (recommended):
-     - Select "GitHub Actions" as the source
+1. **Server Directory**:
+   - Ensure `/var/www/dev/docs/editor/` directory exists
+   - Set proper permissions: `chmod 755 /var/www/dev/docs/`
 
-2. **Documentation URL** (after first deployment):
-   - `https://eip-deckedout-orga.github.io/eip-visual-editor-package/`
+2. **Nginx Configuration**:
+   - Configure nginx to serve from `/var/www/dev/docs/editor/`
+   - URL: `https://deckedout.fr/dev/docs/editor/`
 
 3. **Verify Workflow**:
    - Push these changes to `main`
    - Check Actions tab for "Deploy Documentation" workflow
-   - Wait for deployment to complete
+   - Documentation will be available at https://deckedout.fr/dev/docs/editor/
 
 ## File Structure
 
@@ -110,18 +109,14 @@ project/
    git push
    ```
 
-2. **Enable GitHub Pages** (if not already):
-   - Repository Settings → Pages
-   - Source: GitHub Actions
-
-3. **Verify Deployment**:
-   - Check Actions tab after push
-   - Visit the documentation URL once deployed
+2. **Verify Deployment**:
+   - Check Actions tab after push (runs on self-hosted runner)
+   - Visit https://deckedout.fr/dev/docs/editor/ once deployed
 
 4. **Add Documentation Badge** (optional):
    Add to README.md:
    ```markdown
-   [![Documentation](https://img.shields.io/badge/docs-TypeDoc-blue)](https://eip-deckedout-orga.github.io/eip-visual-editor-package/)
+   [![Documentation](https://img.shields.io/badge/docs-TypeDoc-blue)](https://deckedout.fr/dev/docs/editor/)
    ```
 
 ## Writing Good Documentation
@@ -139,8 +134,8 @@ See `DOCUMENTATION.md` for detailed guidelines on:
 - Verify `src/index.ts` exports all documented items
 
 ### GitHub Actions failing
-- Check workflow permissions in repository settings
-- Verify Pages is enabled
+- Check self-hosted runner status
+- Verify `/var/www/dev/docs/editor/` directory permissions
 - Check Actions tab for error logs
 
 ### Missing types in documentation

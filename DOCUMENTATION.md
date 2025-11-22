@@ -5,8 +5,8 @@ This project uses [TypeDoc](https://typedoc.org/) to automatically generate API 
 ## Viewing Documentation
 
 ### Online
-The documentation is automatically built and deployed to GitHub Pages on every push to the main branch:
-- **URL**: [https://eip-deckedout-orga.github.io/eip-visual-editor-package/](https://eip-deckedout-orga.github.io/eip-visual-editor-package/)
+The documentation is automatically built and deployed to the server on every push to the main branch:
+- **URL**: [https://deckedout.fr/dev/docs/editor/](https://deckedout.fr/dev/docs/editor/)
 
 ### Locally
 To generate and view the documentation locally:
@@ -167,17 +167,17 @@ Documentation settings are defined in `typedoc.json`:
 
 Documentation is automatically:
 1. Generated on every push to `main`
-2. Deployed to GitHub Pages via GitHub Actions
-3. Available at the project's GitHub Pages URL
+2. Deployed to the server via GitHub Actions
+3. Available at https://deckedout.fr/dev/docs/editor/
 
 See `.github/workflows/deploy-docs.yml` for the deployment workflow.
 
 ## Troubleshooting
 
 ### Documentation not updating
-- Check GitHub Actions workflow status
-- Ensure GitHub Pages is enabled in repository settings
-- Verify the deployment source is set to "GitHub Actions"
+- Check GitHub Actions workflow status on the self-hosted runner
+- Verify the `/var/www/dev/docs/editor/` directory exists and has proper permissions
+- Check nginx configuration for the `/dev/docs/editor/` path
 
 ### Missing types
 - Ensure types are exported from `src/index.ts`
