@@ -230,6 +230,19 @@ function EditorWithCustomElements() {
 
 Full API documentation is available at: [https://deckedout.fr/dev/docs/editor/](https://deckedout.fr/dev/docs/editor/)
 
+### Examples
+
+Comprehensive examples are available in the `/examples` directory:
+
+- **[01-basic-usage.tsx](./examples/01-basic-usage.tsx)** - Quickstart with minimal configuration
+- **[02-controlled-mode.tsx](./examples/02-controlled-mode.tsx)** - External state management and persistence
+- **[03-custom-elements.tsx](./examples/03-custom-elements.tsx)** - Creating custom element types
+- **[04-programmatic-api.tsx](./examples/04-programmatic-api.tsx)** - Using the editor API programmatically
+- **[05-editor-modes.tsx](./examples/05-editor-modes.tsx)** - Configuring different editor modes
+- **[06-asset-picker.tsx](./examples/06-asset-picker.tsx)** - Integrating asset management
+
+See the [examples README](./examples/README.md) for detailed documentation and usage patterns.
+
 ### Generating Documentation Locally
 
 ```bash
