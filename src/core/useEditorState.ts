@@ -212,7 +212,37 @@ const editorReducer = (state: EditorState, action: EditorAction): EditorState =>
 };
 
 /**
- * Custom hook for managing editor state
+ * Custom hook for managing visual editor state.
+ * 
+ * Provides a complete state management solution for the visual editor, including:
+ * - Element CRUD operations
+ * - Selection management
+ * - Undo/redo functionality
+ * - Canvas operations (zoom, pan)
+ * - History tracking
+ * - Import/export capabilities
+ * 
+ * @param initialMode - Optional initial editor mode configuration
+ * @returns Object containing editor state, API methods, and utility functions
+ * 
+ * @example
+ * ```tsx
+ * function MyEditor() {
+ *   const { state, api, undo, redo, canUndo, canRedo } = useEditorState();
+ *   
+ *   const handleAddText = () => {
+ *     api.addElement(createElement('text', { content: 'Hello' }));
+ *   };
+ *   
+ *   return (
+ *     <div>
+ *       <button onClick={handleAddText}>Add Text</button>
+ *       <button onClick={undo} disabled={!canUndo}>Undo</button>
+ *       <button onClick={redo} disabled={!canRedo}>Redo</button>
+ *     </div>
+ *   );
+ * }
+ * ```
  */
 export const useEditorState = (initialMode: EditorMode | null = null) => {
   const [state, dispatch] = useReducer(editorReducer, createInitialState(initialMode));

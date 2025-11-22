@@ -7,6 +7,7 @@
  */
 
 import { ElementRenderer } from "../types";
+import { useMemo } from "react";
 
 /**
  * Registry class for managing element renderers
@@ -97,10 +98,29 @@ export class ElementRegistry {
 export const globalElementRegistry = new ElementRegistry();
 
 /**
- * Hook to use the element registry in React components
+ * React hook for creating and managing an element registry instance.
+ * 
+ * The registry is memoized and will only re-initialize if initialRenderers changes.
+ * This ensures stable registry instances across re-renders.
+ * 
+ * @param initialRenderers - Optional array of element renderers to register on initialization
+ * @returns ElementRegistry instance with registered renderers
+ * 
+ * @example
+ * ```tsx
+ * import { useElementRegistry } from '@/core/ElementRegistry';
+ * import { TextElement, ImageElement } from '@/elements';
+ * 
+ * function MyEditor() {
+ *   const registry = useElementRegistry([TextElement, ImageElement]);
+ *   
+ *   // Use registry to look up renderers
+ *   const renderer = registry.get('text');
+ *   
+ *   return <Canvas registry={registry} />;
+ * }
+ * ```
  */
-import { useMemo } from "react";
-
 export const useElementRegistry = (initialRenderers?: ElementRenderer[]): ElementRegistry => {
   return useMemo(() => {
     const registry = new ElementRegistry();
