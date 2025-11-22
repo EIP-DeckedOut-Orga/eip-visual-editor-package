@@ -226,6 +226,22 @@ function EditorWithCustomElements() {
 }
 ```
 
+## Documentation
+
+Full API documentation is available at: [https://eip-deckedout-orga.github.io/eip-visual-editor-package/](https://eip-deckedout-orga.github.io/eip-visual-editor-package/)
+
+### Generating Documentation Locally
+
+```bash
+# Generate documentation
+npm run docs
+
+# Watch mode (regenerates on file changes)
+npm run docs:watch
+```
+
+Documentation is automatically generated and deployed to GitHub Pages on every push to the main branch.
+
 ## Development
 
 ### Running Tests

@@ -1,0 +1,29 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "entryPoints": ["./src/index.ts"],
+  "out": "docs",
+  "plugin": [],
+  "excludePrivate": true,
+  "excludeProtected": false,
+  "excludeExternals": true,
+  "includeVersion": true,
+  "name": "@deckedout/visual-editor",
+  "readme": "./README.md",
+  "theme": "default",
+  "categorizeByGroup": true,
+  "categoryOrder": [
+    "Core",
+    "Components",
+    "Hooks",
+    "Elements",
+    "Utils",
+    "Types",
+    "*"
+  ],
+  "navigationLinks": {
+    "GitHub": "https://github.com/EIP-DeckedOut-Orga/eip-visual-editor-package",
+    "NPM": "https://www.npmjs.com/package/@deckedout/visual-editor"
+  },
+  "sort": ["source-order"],
+  "gitRevision": "main"
+}
