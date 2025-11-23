@@ -8,6 +8,39 @@
 
 A flexible, drag-and-drop visual editor built with React and Konva for creating interactive canvases with customizable elements.
 
+## 🚀 Try It Online
+
+Experience the visual editor instantly in your browser:
+
+- **[Basic Editor](https://stackblitz.com/github/EIP-DeckedOut-Orga/eip-visual-editor-package/tree/main/stackblitz-demos/basic-editor?file=src/App.jsx)** - Simple integration with all core features
+- **[Card Designer](https://stackblitz.com/github/EIP-DeckedOut-Orga/eip-visual-editor-package/tree/main/stackblitz-demos/custom-mode?file=src/App.jsx)** - Custom mode with toolbar/topbar customization
+- **[Asset Picker](https://stackblitz.com/github/EIP-DeckedOut-Orga/eip-visual-editor-package/tree/main/stackblitz-demos/asset-picker?file=src/App.jsx)** - Game asset management integration
+
+> 💡 **Tip**: Fork any demo and start building your own editor immediately!
+
+## 📸 Screenshots
+
+<!-- TODO: Add screenshots here -->
+<!-- Recommended: 
+  - Main editor interface showing all panels
+  - Custom mode example (card designer)
+  - Asset picker in action
+  - Inspector panel detail
+  - Mobile responsive view (if applicable)
+-->
+
+**Editor Interface:**
+> _Screenshot placeholder - Add image showing the full editor with toolbar, canvas, inspector, and layers panel_
+
+**Custom Mode - Card Designer:**
+> _Screenshot placeholder - Add image showing custom canvas size and custom toolbar/topbar_
+
+**Asset Picker:**
+> _Screenshot placeholder - Add image showing the asset picker panel with game assets_
+
+**Demo GIF:**
+> _GIF placeholder - Add animated GIF showing drag-drop, resize, rotate, and edit workflow_
+
 ## Features
 
 - 🎨 **Visual Canvas Editor**: Drag, resize, and rotate elements on a canvas
@@ -62,24 +95,23 @@ import '@deckedout/visual-editor/styles';
 
 ```tsx
 import { VisualEditorWorkspace } from '@deckedout/visual-editor';
-import { useState } from 'react';
 
 function App() {
-  const [mode, setMode] = useState('edit');
-
   return (
     <div style={{ width: '100vw', height: '100vh' }}>
       <VisualEditorWorkspace
-        canvasWidth={800}
-        canvasHeight={600}
-        mode={mode}
+        showToolbar={true}
+        showTopbar={true}
         showInspector={true}
         showLayers={true}
+        enableSnapGuides={true}
       />
     </div>
   );
 }
 ```
+
+**Want to see it in action?** Check out the [live Vite example](#-live-examples) with three interactive demos!
 
 ## Core Components
 
@@ -186,7 +218,53 @@ globalElementRegistry.register(customElementRenderer);
 - `globalElementRegistry`: Global registry for element types
 - Built-in elements: `textElementRenderer`, `imageElementRenderer`
 
-## Examples
+## 🎯 Live Examples
+
+A complete **Vite + React example project** is included with three interactive demos:
+
+### [📁 example-vite/](./example-vite) - Full Vite Application
+
+Run the examples locally:
+```bash
+cd example-vite
+npm install
+npm run dev
+```
+
+**Included Demos:**
+
+1. **[Basic Editor](./example-vite/src/pages/BasicEditor.tsx)** (`/`)
+   - Simple integration with all default features
+   - All panels enabled (toolbar, topbar, inspector, layers)
+   - Snap guides and alignment helpers
+   - Perfect starting point for new projects
+
+2. **[Custom Mode](./example-vite/src/pages/CustomMode.tsx)** (`/custom-mode`)
+   - Card designer with 750×1050 custom canvas
+   - Custom toolbar with "Load Template" action
+   - Custom topbar with "Export PNG" button
+   - Auto-save functionality with visual indicator
+   - Background color and grid configuration
+   - Shows advanced editor customization
+
+3. **[Asset Picker](./example-vite/src/pages/WithAssets.tsx)** (`/with-assets`)
+   - Asset management integration
+   - Mock game assets (sprites, backgrounds, items)
+   - Background image selector
+   - 1200×800 canvas with dark theme
+   - Grid overlay for precise positioning
+
+**Features demonstrated:**
+- 🎨 Custom canvas sizes and layouts
+- 🔧 Toolbar and topbar customization
+- 📦 Asset picker integration
+- 💾 State persistence and auto-save
+- 🎭 Different editor modes
+- 🌙 Dark mode theming
+
+See the [example-vite/README.md](./example-vite/README.md) for full setup instructions and customization guide.
+
+## 📘 Code Examples
 
 ### Basic Editor
 
@@ -197,8 +275,11 @@ function BasicEditor() {
   return (
     <div style={{ width: '100%', height: '600px' }}>
       <VisualEditorWorkspace
-        canvasWidth={800}
-        canvasHeight={600}
+        showToolbar={true}
+        showTopbar={true}
+        showInspector={true}
+        showLayers={true}
+        enableSnapGuides={true}
       />
     </div>
   );
@@ -222,17 +303,41 @@ globalElementRegistry.register(imageElementRenderer);
 globalElementRegistry.register(myCustomElement);
 
 function EditorWithCustomElements() {
-  return <VisualEditorWorkspace canvasWidth={800} canvasHeight={600} />;
+  return <VisualEditorWorkspace />;
 }
 ```
 
-## Documentation
+### With Asset Picker
 
-Full API documentation is available at: [https://deckedout.fr/dev/docs/editor/](https://deckedout.fr/dev/docs/editor/)
+```tsx
+import { VisualEditorWorkspace } from '@deckedout/visual-editor';
 
-### Examples
+const assets = [
+  { name: 'Character', path: '/assets/character.png', type: 'sprite' },
+  { name: 'Background', path: '/assets/bg.png', type: 'background' }
+];
 
-Comprehensive examples are available in the `/examples` directory:
+function EditorWithAssets() {
+  return (
+    <VisualEditorWorkspace
+      showAssetPicker={true}
+      mode={{
+        name: 'Asset Editor',
+        assetPickerProps: { assets }
+      }}
+    />
+  );
+}
+```
+
+## 📚 Documentation
+
+### Full API Documentation
+Available at: [https://deckedout.fr/dev/docs/editor/](https://deckedout.fr/dev/docs/editor/)
+
+### TypeScript Examples (`/examples`)
+
+Comprehensive standalone examples showing specific features:
 
 - **[01-basic-usage.tsx](./examples/01-basic-usage.tsx)** - Quickstart with minimal configuration
 - **[02-controlled-mode.tsx](./examples/02-controlled-mode.tsx)** - External state management and persistence
@@ -242,6 +347,18 @@ Comprehensive examples are available in the `/examples` directory:
 - **[06-asset-picker.tsx](./examples/06-asset-picker.tsx)** - Integrating asset management
 
 See the [examples README](./examples/README.md) for detailed documentation and usage patterns.
+
+### Runnable Vite Example (`/example-vite`)
+
+Complete working application with React Router and three interactive demos:
+
+- **[BasicEditor.tsx](./example-vite/src/pages/BasicEditor.tsx)** - Simple integration
+- **[CustomMode.tsx](./example-vite/src/pages/CustomMode.tsx)** - Card designer with custom toolbar/topbar
+- **[WithAssets.tsx](./example-vite/src/pages/WithAssets.tsx)** - Asset picker and background selector
+
+Run it locally: `cd example-vite && npm install && npm run dev`
+
+Full guide: [example-vite/README.md](./example-vite/README.md)
 
 ### Generating Documentation Locally
 
