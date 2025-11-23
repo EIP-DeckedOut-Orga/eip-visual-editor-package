@@ -1,202 +1,132 @@
-# StackBlitz Demos Guide
+# StackBlitz Demo Guide
 
-This document explains how to create, update, and maintain StackBlitz demos for the visual editor package.
+This document explains how to use and maintain the StackBlitz demo for the visual editor package.
 
 ## Overview
 
-We maintain 3 standalone StackBlitz demos that showcase different features of `@deckedout/visual-editor`:
+We use the **example-vite** project directly for StackBlitz demos. It includes 3 pages showcasing different features of `@deckedout/visual-editor`:
 
-1. **Basic Editor** - Simple integration with core features
-2. **Custom Mode (Card Designer)** - Advanced customization with custom toolbar/topbar
-3. **Asset Picker** - Asset management integration
+1. **Basic Editor** (`/`) - Simple integration with core features
+2. **Custom Mode** (`/custom-mode`) - Card Designer with custom toolbar/topbar
+3. **Asset Picker** (`/with-assets`) - Asset management integration
+
+## Why One Demo Project?
+
+Instead of maintaining multiple standalone demos, we use the existing `example-vite` app:
+
+✅ **No code duplication** - Single source of truth
+✅ **Easier maintenance** - Update once, works everywhere
+✅ **Better UX** - Users can navigate between examples
+✅ **Works locally AND online** - Same codebase for both
 
 ## Demo Structure
 
-Each demo is a complete, standalone Vite + React application located in `/stackblitz-demos/`:
+The demo is a complete Vite + React application with routing:
 
 ```
-stackblitz-demos/
-├── basic-editor/
-│   ├── src/
-│   │   ├── App.jsx          # Main demo component
-│   │   ├── main.jsx         # React entry point
-│   │   └── index.css        # Global styles
-│   ├── index.html           # HTML template
-│   ├── package.json         # Dependencies
-│   ├── vite.config.js       # Vite configuration
-│   └── README.md            # Demo documentation
-├── custom-mode/
-│   └── ... (same structure)
-└── asset-picker/
-    └── ... (same structure)
+example-vite/
+├── src/
+│   ├── pages/
+│   │   ├── BasicEditor.tsx      # / route
+│   │   ├── CustomMode.tsx       # /custom-mode route
+│   │   └── WithAssets.tsx       # /with-assets route
+│   ├── App.tsx                  # Router setup
+│   ├── App.css                  # Navigation styles
+│   ├── main.tsx                 # Entry point
+│   └── index.css                # Global styles + dark mode
+├── index.html                   # HTML template
+├── package.json                 # Dependencies
+├── vite.config.ts               # Vite configuration
+├── tailwind.config.js           # Tailwind CSS
+├── postcss.config.js            # PostCSS
+└── README.md                    # Setup guide
 ```
 
-## Creating New Demos
+## Adding New Example Pages
 
-### 1. Set Up Demo Directory
+To add a new example to the demo:
 
-```bash
-cd stackblitz-demos
-mkdir my-new-demo
-cd my-new-demo
-```
+### 1. Create New Page Component
 
-### 2. Create Essential Files
+Create a new file in `example-vite/src/pages/`:
 
-**package.json:**
-```json
-{
-  "name": "visual-editor-my-demo",
-  "version": "1.0.0",
-  "description": "Description of your demo",
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    "@deckedout/visual-editor": "^1.0.7",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1"
-  },
-  "devDependencies": {
-    "@vitejs/plugin-react": "^4.3.4",
-    "vite": "^5.4.21"
-  }
-}
-```
-
-**vite.config.js:**
-```js
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-
-export default defineConfig({
-  plugins: [react()],
-  server: {
-    port: 3000
-  },
-  optimizeDeps: {
-    include: ['react', 'react-dom', '@deckedout/visual-editor']
-  }
-})
-```
-
-**index.html:**
-```html
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Visual Editor - My Demo</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
-</html>
-```
-
-**src/main.jsx:**
-```jsx
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App'
-import './index.css'
-
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-)
-```
-
-**src/index.css:**
-```css
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-#root {
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
-}
-```
-
-**src/App.jsx:**
-```jsx
+```tsx
+// src/pages/MyNewExample.tsx
 import { VisualEditorWorkspace } from '@deckedout/visual-editor'
 
-export default function App() {
+export default function MyNewExample() {
   return (
-    <div style={{ width: '100%', height: '100%' }}>
+    <div className="flex flex-col w-full h-full">
       <VisualEditorWorkspace
+        // Your example configuration
         showToolbar={true}
         showTopbar={true}
         showInspector={true}
         showLayers={true}
-        enableSnapGuides={true}
       />
     </div>
   )
 }
 ```
 
-### 3. Add Demo README
+### 2. Add Route
 
-Create a comprehensive README.md explaining:
-- What features are demonstrated
-- How to use the demo
-- Code highlights
-- Links to full documentation
+Update `example-vite/src/App.tsx`:
 
-See existing demo READMEs for examples.
+```tsx
+import MyNewExample from './pages/MyNewExample'
+
+// In the Routes component:
+<Route path="/my-new-example" element={<MyNewExample />} />
+```
+
+### 3. Add Navigation Link
+
+Update the navigation in `App.tsx`:
+
+```tsx
+<nav>
+  <Link to="/">Basic</Link>
+  <Link to="/custom-mode">Custom Mode</Link>
+  <Link to="/with-assets">Assets</Link>
+  <Link to="/my-new-example">My Example</Link>
+</nav>
+```
+
+### 4. Document the Example
+
+Add description to `example-vite/README.md` and the main `README.md`.
 
 ## Publishing to StackBlitz
 
-### Option 1: GitHub Integration (Recommended)
+### GitHub Integration (Automatic)
 
-1. **Commit your demo** to the repository:
-   ```bash
-   git add stackblitz-demos/my-new-demo
-   git commit -m "Add new demo: my-new-demo"
-   git push
-   ```
+The demo uses GitHub integration - no manual upload needed!
 
-2. **Create StackBlitz link** using GitHub:
-   ```
-   https://stackblitz.com/github/EIP-DeckedOut-Orga/eip-visual-editor-package/tree/main/stackblitz-demos/my-new-demo?file=src/App.jsx
-   ```
+**StackBlitz URL:**
+```
+https://stackblitz.com/github/EIP-DeckedOut-Orga/eip-visual-editor-package/tree/main/example-vite?file=src/App.tsx
+```
 
-3. **Test the link** - Click it to verify it opens correctly in StackBlitz
+**How it works:**
+1. Push changes to GitHub
+2. StackBlitz automatically fetches the latest code
+3. Users can navigate between all example pages
 
-### Option 2: Manual Upload
+**To open a specific page:**
+```
+?file=src/pages/BasicEditor.tsx     # Opens Basic Editor
+?file=src/pages/CustomMode.tsx      # Opens Custom Mode
+?file=src/pages/WithAssets.tsx      # Opens Asset Picker
+```
 
-1. Go to [stackblitz.com](https://stackblitz.com)
-2. Click "New Project" → "Import from GitHub"
-3. Paste your GitHub repository URL
-4. Navigate to your demo folder
-
-## Updating Demos
+## Updating the Demo
 
 ### Update Package Version
 
 When releasing a new version of `@deckedout/visual-editor`:
 
-1. Update `package.json` in all demo folders:
+1. Update `example-vite/package.json`:
    ```json
    {
      "dependencies": {
@@ -205,55 +135,59 @@ When releasing a new version of `@deckedout/visual-editor`:
    }
    ```
 
-2. Commit and push changes
+2. Test locally, then commit and push
 
-### Update Demo Code
+### Update Example Code
 
-To update demo functionality:
+To update or fix examples:
 
-1. Edit the `src/App.jsx` file
-2. Test locally if possible (see "Testing Locally" below)
-3. Commit and push
+1. Edit files in `example-vite/src/pages/`
+2. Test locally (see "Testing Locally" below)
+3. Commit and push changes
 4. StackBlitz will automatically use the latest code
 
 ## Testing Locally
 
-Test demos before committing:
+Test the demo before committing:
 
 ```bash
-cd stackblitz-demos/basic-editor
+cd example-vite
 npm install
 npm run dev
 ```
 
-Open `http://localhost:3000` to verify the demo works.
+Open `http://localhost:3000` and test all three example pages:
+- `http://localhost:3000/` - Basic Editor
+- `http://localhost:3000/custom-mode` - Custom Mode
+- `http://localhost:3000/with-assets` - Asset Picker
 
 ## Best Practices
 
-### Keep Demos Simple
-- Focus on one feature per demo
-- Avoid unnecessary complexity
+### Keep Examples Focused
+- Each page demonstrates specific features
 - Use clear, commented code
+- Show realistic use cases
 
-### Self-Contained
-- Each demo should work independently
-- Don't rely on external files outside the demo folder
-- Include all necessary styles inline
-
-### Educational
-- Add helpful comments in the code
-- Write clear README documentation
-- Explain why, not just what
+### Educational Value
+- Add helpful comments explaining why
+- Document in page-specific READMEs if needed
+- Include code examples in main README
 
 ### Performance
-- Keep bundle size small
+- Keep bundle size reasonable
 - Use placeholder images (via.placeholder.com)
-- Avoid heavy dependencies
+- Lazy load heavy features if needed
+
+### Maintainability
+- DRY - Don't duplicate code between pages
+- Extract common components if needed
+- Keep routing simple and clear
 
 ### Accessibility
 - Use semantic HTML
 - Include proper ARIA labels
 - Ensure keyboard navigation works
+- Test with screen readers
 
 ## Troubleshooting
 
@@ -290,22 +224,27 @@ Open `http://localhost:3000` to verify the demo works.
 
 When releasing a new package version:
 
-- [ ] Update package version in all demo `package.json` files
-- [ ] Test each demo on StackBlitz
-- [ ] Update README if API changes affect demos
-- [ ] Verify all demo links work
+- [ ] Update package version in `example-vite/package.json`
+- [ ] Test all pages locally
+- [ ] Test on StackBlitz (click the link)
+- [ ] Update README if API changes affect examples
+- [ ] Verify StackBlitz link works
 - [ ] Check for any deprecation warnings
+- [ ] Update screenshots if UI changed
 
-## Adding Demo Links to README
+## Demo Link in README
 
-Update the main README.md with StackBlitz links:
+The main README.md includes a single StackBlitz link:
 
 ```markdown
 ## 🚀 Try It Online
 
-- **[Basic Editor](https://stackblitz.com/github/EIP-DeckedOut-Orga/eip-visual-editor-package/tree/main/stackblitz-demos/basic-editor?file=src/App.jsx)**
-- **[Custom Mode](https://stackblitz.com/github/EIP-DeckedOut-Orga/eip-visual-editor-package/tree/main/stackblitz-demos/custom-mode?file=src/App.jsx)**
-- **[Asset Picker](https://stackblitz.com/github/EIP-DeckedOut-Orga/eip-visual-editor-package/tree/main/stackblitz-demos/asset-picker?file=src/App.jsx)**
+**[Open in StackBlitz](https://stackblitz.com/github/EIP-DeckedOut-Orga/eip-visual-editor-package/tree/main/example-vite?file=src/App.tsx)** - Interactive demo with 3 examples
+
+Once opened in StackBlitz, navigate between:
+- `/` - Basic Editor
+- `/custom-mode` - Card Designer  
+- `/with-assets` - Asset Picker
 ```
 
 ## Resources

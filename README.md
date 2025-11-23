@@ -10,13 +10,16 @@ A flexible, drag-and-drop visual editor built with React and Konva for creating 
 
 ## 🚀 Try It Online
 
-Experience the visual editor instantly in your browser:
+**[Open in StackBlitz](https://stackblitz.com/github/EIP-DeckedOut-Orga/eip-visual-editor-package/tree/main/example-vite?file=src/App.tsx)** - Interactive demo with 3 examples
 
-- **[Basic Editor](https://stackblitz.com/github/EIP-DeckedOut-Orga/eip-visual-editor-package/tree/main/stackblitz-demos/basic-editor?file=src/App.jsx)** - Simple integration with all core features
-- **[Card Designer](https://stackblitz.com/github/EIP-DeckedOut-Orga/eip-visual-editor-package/tree/main/stackblitz-demos/custom-mode?file=src/App.jsx)** - Custom mode with toolbar/topbar customization
-- **[Asset Picker](https://stackblitz.com/github/EIP-DeckedOut-Orga/eip-visual-editor-package/tree/main/stackblitz-demos/asset-picker?file=src/App.jsx)** - Game asset management integration
+> **⚠️ Note:** StackBlitz link will work once the repository is public on GitHub. See [STACKBLITZ.md](./STACKBLITZ.md) for setup.
 
-> 💡 **Tip**: Fork any demo and start building your own editor immediately!
+Once opened in StackBlitz, navigate between:
+- **`/`** - Basic Editor with all core features
+- **`/custom-mode`** - Card Designer with custom toolbar/topbar
+- **`/with-assets`** - Asset Picker with game assets
+
+> 💡 **Tip**: Fork the demo and start customizing immediately!
 
 ## 📸 Screenshots
 
@@ -220,11 +223,13 @@ globalElementRegistry.register(customElementRenderer);
 
 ## 🎯 Live Examples
 
-A complete **Vite + React example project** is included with three interactive demos:
+A complete **Vite + React example project** with three interactive demos:
 
-### [📁 example-vite/](./example-vite) - Full Vite Application
+### [📁 example-vite/](./example-vite) - Full Application
 
-Run the examples locally:
+**[Try in StackBlitz →](https://stackblitz.com/github/EIP-DeckedOut-Orga/eip-visual-editor-package/tree/main/example-vite?file=src/App.tsx)**
+
+**Or run locally:**
 ```bash
 cd example-vite
 npm install
