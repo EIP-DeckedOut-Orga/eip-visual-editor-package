@@ -91,18 +91,20 @@ Key features:
 - **Grid and snap settings** for precise layout
 
 ### 3. With Assets (`/with-assets`)
-Shows asset picker integration:
+Shows asset management with file upload:
 - Asset picker panel enabled
 - Mock game assets provided
+- **Background upload button** - Upload custom backgrounds
+- Dynamic background list - Uploaded images appear in dropdown
 - Custom canvas size (1200×800)
 - Dark background theme
 - Grid overlay
 
 Perfect for:
-- Game asset management
-- Image libraries
-- Media galleries
-- Design systems
+- Game asset management with custom uploads
+- Dynamic asset libraries
+- User-provided content
+- Design systems with flexible assets
 
 ## 🔧 Configuration
 

@@ -255,7 +255,8 @@ npm run dev
 3. **[Asset Picker](./example-vite/src/pages/WithAssets.tsx)** (`/with-assets`)
    - Asset management integration
    - Mock game assets (sprites, backgrounds, items)
-   - Background image selector
+   - **Background upload** - Upload custom images via file picker
+   - Dynamic background selector - Uploaded images added to dropdown
    - 1200×800 canvas with dark theme
    - Grid overlay for precise positioning
 

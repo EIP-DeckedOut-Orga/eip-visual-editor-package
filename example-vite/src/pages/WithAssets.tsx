@@ -1,15 +1,18 @@
-import { useState, useCallback, useMemo } from 'react'
+import { useState, useCallback, useMemo, useRef } from 'react'
 import { VisualEditorWorkspace, EditorMode, CanvasExport } from '@deckedout/visual-editor'
 
 /**
  * Asset Picker Example
  * 
- * Demonstrates how to integrate the asset picker panel.
- * Shows how to provide custom assets for users to drag onto the canvas.
+ * Demonstrates asset management with file upload.
+ * Shows how to upload custom backgrounds and add assets dynamically.
  */
 export default function WithAssets() {
   const [canvasData, setCanvasData] = useState<CanvasExport | null>(null)
   const [selectedBackground, setSelectedBackground] = useState<string | undefined>(undefined)
+  const [uploadedBackgrounds, setUploadedBackgrounds] = useState<Array<{ name: string; path: string }>>([])
+  const fileInputRef = useRef<HTMLInputElement>(null)
+
   // Mock assets - in a real app, these would come from your backend/CMS
   const mockAssets = useMemo(() => [
     {
@@ -43,6 +46,53 @@ export default function WithAssets() {
       type: 'item'
     }
   ], [])
+
+  // Combine mock assets with uploaded backgrounds
+  const allBackgrounds = useMemo(() => [
+    ...mockAssets.filter(a => a.type === 'background'),
+    ...uploadedBackgrounds
+  ], [mockAssets, uploadedBackgrounds])
+
+  // Handle background upload
+  const handleBackgroundUpload = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0]
+    if (!file) return
+
+    // Validate file type
+    if (!file.type.startsWith('image/')) {
+      alert('Please upload an image file')
+      return
+    }
+
+    // Create object URL for the uploaded file
+    const imageUrl = URL.createObjectURL(file)
+    
+    // Add to uploaded backgrounds
+    const newBackground = {
+      name: file.name.replace(/\.[^/.]+$/, ''), // Remove extension
+      path: imageUrl
+    }
+    
+    setUploadedBackgrounds(prev => [...prev, newBackground])
+    
+    // Automatically select the newly uploaded background
+    setSelectedBackground(imageUrl)
+
+    // Reset input
+    if (fileInputRef.current) {
+      fileInputRef.current.value = ''
+    }
+  }, [])
+
+  // Trigger file input click
+  const handleUploadClick = useCallback(() => {
+    fileInputRef.current?.click()
+  }, [])
+
+  // Handle background selection change
+  const handleBackgroundChange = useCallback((value: string) => {
+    setSelectedBackground(value === 'none' ? undefined : value)
+  }, [])
 
   // Define editor mode with topbar config and asset picker
   const mode: EditorMode = useMemo(() => ({
@@ -78,26 +128,33 @@ export default function WithAssets() {
       
       actionsStart: [
         {
+          type: 'button' as const,
+          id: 'upload-background',
+          label: 'Upload Background',
+          onClick: handleUploadClick
+        },
+        {
+          type: 'separator' as const,
+          id: 'sep-1'
+        },
+        {
           type: 'dropdown' as const,
           id: 'background-selector',
           label: 'Background',
           placeholder: 'Select background',
           options: [
             { value: 'none', label: 'None' },
-            ...mockAssets.filter(a => a.type === 'background').map(a => ({
-              value: a.path,
-              label: a.name
+            ...allBackgrounds.map(bg => ({
+              value: bg.path,
+              label: bg.name
             }))
           ],
           value: selectedBackground || 'none',
-          onChange: (value: string) => {
-            setSelectedBackground(value === 'none' ? undefined : value)
-          }
+          onChange: handleBackgroundChange
         }
       ]
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }), [selectedBackground])
+  }), [selectedBackground, allBackgrounds, handleUploadClick, handleBackgroundChange, mockAssets])
 
 
 
@@ -110,6 +167,15 @@ export default function WithAssets() {
 
   return (
     <div className="flex flex-col w-full h-full">
+      {/* Hidden file input for background upload */}
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept="image/*"
+        onChange={handleBackgroundUpload}
+        style={{ display: 'none' }}
+      />
+      
       <VisualEditorWorkspace
         className="w-full h-full"
         mode={mode}
